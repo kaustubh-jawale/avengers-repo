@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>َ Home Form</title>
+
+
+  </head>
+<style>
+{% load static %}
+.btns a{
+  position: relative;
+  margin: 10px 30px;
+  text-align:center;
+  height: 60px;
+  width: 300px;
+  display: block;
+  line-height: 60px;
+  border-radius: 30px;
+  text-decoration: none;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+.btns a:first-child{
+  background: linear-gradient(-90deg, #f5ce62, #e85a19);
+}
+.btns a:last-child{
+  background: linear-gradient(90deg, #0162c8, #55e7fc);
+}
+.btns a > span{
+  position: absolute;
+  background: #fff;
+  transform: translate(-60%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-image:url('{% static "images/image.jpeg" %}');
+  background-repeat:no-repeat;
+  background-size:cover;
+}
+.box{
+  width: 360px;
+  padding: 50px;
+  position: absolute;
+  top: 40%;
+  left: 45%;
+  background-color:rgb(0,0,0,0.8);
+  border-radius: 30px;
+  transform: translate(-50%,-50%);
+  text-align: center;
+}
+.box h1{
+  color: black;
+  margin: 10px 20px;
+  font-weight: 500;
+}
+
+.marquee
+{
+ font-size:30px;
+ font-family: "Times New Roman", Times, serif;
+ font-weight: 500;
+}
+
+</style>
+  <body>
+    <div class="marquee">
+      <marquee width="60%" direction="left" height="400px">
+          Welcome to Interview Scheduler
+      </marquee>
+   </div>
+    <form class="box" action=" " method="post" >
+         <div class="btns">
+          <a href="{% url 'home' %}">Login </a>
+          <a href="{% url 'register' %}">Register</a>
+        </div>
+    </form>
+
+
+  </body>
+</html>
