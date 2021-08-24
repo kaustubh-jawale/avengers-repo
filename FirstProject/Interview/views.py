@@ -4,13 +4,13 @@ from django.contrib.auth.models import User, auth
 from django.http import  HttpResponse
 from django.contrib import admin
 from django.contrib.auth import  authenticate
-from Interview.models import Candidate
+from .models import Candidate
 
 # Create your views here.
 def home(request):
     return render(request, 'Home.html')
 def welcome(request):
-    return render(request,'welcome.html')
+    return render(request, 'welcome.html')
 
 #Registration Code here
 def register(request):
@@ -54,7 +54,7 @@ def hr_login(request):
         user=auth.authenticate(username=username,password=password)
         if user is not None:
             auth.login(request,user)
-            return render(request, 'hr_page.html')
+            return render(request, 'hr_candidateinfo.html')
         else:
             messages.error(request, "Enter correct credentials..")
             return render(request, 'hr_login.html')
@@ -106,3 +106,8 @@ def hr(request):
         ins = Candidate(name=name, skills=skills, experience=experience, day=day, time=time)
         ins.save()
     return render(request, 'hr_candidateinfo.html')
+
+def Logout(request):
+    def logout(request):
+        auth.logout(request)
+        return redirect('/')
