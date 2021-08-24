@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, auth
 from django.http import  HttpResponse
 from django.contrib import admin
 from django.contrib.auth import  authenticate
+from Interview.models import Candidate
 
 # Create your views here.
 def home(request):
@@ -89,3 +90,19 @@ def interviewer_page(request):
 #Interviewer reg- Mayuri's Code added
 def interview_details(request):
     return render(request, 'interview_details.html')
+
+#Page after HR submits candidate information
+def submit_candidateinfo(request):
+    return render(request, 'submit_candidateinfo.html')
+
+
+def hr(request):
+    if request.method=="POST":
+        name = request.POST.get('name', '')
+        skills = request.POST.get('skills', '')
+        experience = request.POST.get('experience', '')
+        day = request.POST.get('day', '')
+        time = request.POST.get('time', '')
+        ins = Candidate(name=name, skills=skills, experience=experience, day=day, time=time)
+        ins.save()
+    return render(request, 'hr_candidateinfo.html')

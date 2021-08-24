@@ -15,6 +15,9 @@ urlpatterns = [
     path('hr_page/', views.hr_page, name="hr_page"),#After Login
     path('interviewer_page/', views.interviewer_page, name="interviewer_page"),#After Login
     path('interview_details/', views.interview_details, name="interview_details"),#Mayuri's code
+    path('hr/', views.hr, name="Info"), #saumya's code
+    path('submit_candidateinfo/', views.submit_candidateinfo, name="submit") #saumya's code
+    
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
