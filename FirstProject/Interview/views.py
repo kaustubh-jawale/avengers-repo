@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, auth
 from django.http import  HttpResponse
 from django.contrib import admin
 from django.contrib.auth import  authenticate
-from .models import Candidate
+from .models import Candidate,Employee
 
 # Create your views here.
 def home(request):
@@ -71,7 +71,7 @@ def interviewer(request):
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
-            return render(request, 'interviewer_page.html')
+            return render(request, 'interview_details.html')
         else:
             messages.error(request,"Enter correct credentials..")
             return render(request, 'Interviewer_Login.html')
@@ -80,16 +80,31 @@ def interviewer(request):
 
 
 #After Login navigate to this  pages
-def hr_page(request):
-    return render(request,'hr_page.html')
-def interviewer_page(request):
-    return render(request,'interviewer_page.html')
+
 
 
 
 #Interviewer reg- Mayuri's Code added
 def interview_details(request):
-    return render(request, 'interview_details.html')
+        if request.method == "POST":
+            emp_first_name = request.POST.get('first_name', '')
+            emp_last_name = request.POST.get('last_name', '')
+            emp_ID = request.POST.get('Emp_ID', '')
+            emp_Email = request.POST.get('Email_ID', '')
+            emp_Phone = request.POST.get('phone', '')
+            emp_Gender = request.POST.get('gender', '')
+            emp_Experience = request.POST.get('experience', '')
+            emp_Skill = request.POST.get('skill', '')
+            time_Week = request.POST.get('week', '')
+            time_Day = request.POST.get('day', '')
+            time_Slot = request.POST.get('time', '')
+            ins = Employee(emp_first_name=emp_first_name, emp_last_name=emp_last_name, emp_ID=emp_ID,
+                           emp_Email=emp_Email, emp_Phone=emp_Phone, emp_Gender=emp_Gender,
+                           emp_Experience=emp_Experience, emp_Skill=emp_Skill, time_Week=time_Week, time_Day=time_Day,
+                           time_Slot=time_Slot)
+            ins.save()
+            return render(request, 'interviewer_page.html')
+
 
 #Page after HR submits candidate information
 def submit_candidateinfo(request):
@@ -105,7 +120,8 @@ def hr(request):
         time = request.POST.get('time', '')
         ins = Candidate(name=name, skills=skills, experience=experience, day=day, time=time)
         ins.save()
-        return render(request, 'submit_candidateinfo.html')
+        context={'time':time}
+        return render(request, 'submit_candidateinfo.html',)
     return render(request, 'hr_candidateinfo.html')
 
 def Logout(request):
