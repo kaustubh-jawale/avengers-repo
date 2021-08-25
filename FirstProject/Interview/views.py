@@ -4,12 +4,13 @@ from django.contrib.auth.models import User, auth
 from django.http import  HttpResponse
 from django.contrib import admin
 from django.contrib.auth import  authenticate
+from .models import Candidate
 
 # Create your views here.
 def home(request):
     return render(request, 'Home.html')
 def welcome(request):
-    return render(request,'welcome.html')
+    return render(request, 'welcome.html')
 
 #Registration Code here
 def register(request):
@@ -53,7 +54,7 @@ def hr_login(request):
         user=auth.authenticate(username=username,password=password)
         if user is not None:
             auth.login(request,user)
-            return render(request, 'hr_page.html')
+            return render(request, 'hr_candidateinfo.html')
         else:
             messages.error(request, "Enter correct credentials..")
             return render(request, 'hr_login.html')
@@ -89,3 +90,25 @@ def interviewer_page(request):
 #Interviewer reg- Mayuri's Code added
 def interview_details(request):
     return render(request, 'interview_details.html')
+
+#Page after HR submits candidate information
+def submit_candidateinfo(request):
+    return render(request, 'submit_candidateinfo.html')
+
+
+def hr(request):
+    if request.method=="POST":
+        name = request.POST.get('name', '')
+        skills = request.POST.get('skills', '')
+        experience = request.POST.get('experience', '')
+        day = request.POST.get('day', '')
+        time = request.POST.get('time', '')
+        ins = Candidate(name=name, skills=skills, experience=experience, day=day, time=time)
+        ins.save()
+        return render(request, 'submit_candidateinfo.html')
+    return render(request, 'hr_candidateinfo.html')
+
+def Logout(request):
+    def logout(request):
+        auth.logout(request)
+        return redirect('/')
