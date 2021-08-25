@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title>َLogin Form</title>
-
   </head>
 <style>
 {% load static %}
@@ -11,24 +10,29 @@ body{
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-background-image:url('{% static "images/image.jpeg" %}');
-background-repeat:no-repeat;
-background-size:cover;
-
+  background-image:url('{% static "images/image.jpeg" %}');
+  background-repeat:no-repeat;
+  background-size:cover;
 }
 .box{
-  width: 300px;
+  width: 400px;
   padding: 40px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-
+  background-color:rgb(0,0,0,0.8);
   text-align: center;
+  border-radius: 30px;
 }
 .box h1{
-  color: black;
-
+  color: white;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: 500;
+}
+.box p{
+  color: red;
+  font-family: "Times New Roman", Times, serif;
   font-weight: 500;
 }
 .box input[type = "text"],.box input[type = "password"]{
@@ -41,7 +45,7 @@ background-size:cover;
   padding: 14px 10px;
   width: 200px;
   outline: none;
-  color: black;
+  color: white;
   border-radius: 24px;
   transition: 0.25s;
 }
@@ -58,7 +62,7 @@ background-size:cover;
   border: 2px solid #2ecc71;
   padding: 14px 40px;
   outline: none;
-  color: black;
+  color: white;
   border-radius: 24px;
   transition: 0.25s;
   cursor: pointer;
@@ -66,18 +70,21 @@ background-size:cover;
 .box input[type = "submit"]:hover{
   background: #2ecc71;
 }
-
-
 </style>
   <body id="bg" >
+        <form action="hr_login" class="box" method="post"  >
+               {% csrf_token %}
+               <h1>Login As HR</h1>
+                <input id="username" type="text" name="username" placeholder="username">
+                <input id="password" type="password" name="password" placeholder="password">
 
-<form class="box"  >
-  <h1>Login As HR</h1>
-  <input id="username" type="text" name="" placeholder="Username">
-  <input id="password" type="password" name="" placeholder="Password">
-  <input type="submit" name="Login" value="Login">
-</form>
+                {% for msg in messages %}
+                     <p>{{msg}}</p>
+                 {% endfor %}
 
+                <input type="submit" name="Login" >
+                <a href="{% url 'home' %}">Back</a>
+       </form>
 
-  </body>
+   </body>
 </html>

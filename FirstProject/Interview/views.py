@@ -1,8 +1,15 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
+<<<<<<< HEAD
 from django.http import HttpResponse
 
+=======
+from django.http import  HttpResponse
+from django.contrib import admin
+from django.contrib.auth import  authenticate
+from .models import Candidate
+>>>>>>> 59cc6022a0423adf8340d9c550ee3114505ed599
 
 # Create your views here.
 def home(request):
@@ -12,15 +19,81 @@ def home(request):
 def welcome(request):
     return render(request, 'welcome.html')
 
+<<<<<<< HEAD
 
+=======
+#Registration Code here
+def register(request):
+    # if request from registration.html is POST, get all details in variables
+    if request.method == 'POST':
+        firstname = request.POST['firstname']
+        lastname = request.POST['lastname']
+        username = request.POST['username']
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
+        email = request.POST['email']
+
+        # check if password and confirm password both are same
+        if password == confirm_password:
+            # check whether same username is there any database
+            if User.objects.filter(username=username).exists():
+                messages.info(request, 'Username is already taken')
+                return redirect('register')
+            else:
+                # if not same username, register the user
+                user = User.objects.create_user(first_name=firstname, last_name=lastname, email=email,
+                                                username=username, password=password)
+
+                user.save()
+                return redirect('/')
+        else:
+            # printing message if password doesnt match
+            messages.info(request, 'Password not matched')
+            return redirect('register')
+        return redirect('register')
+
+    # if the request from registration.html is GET, then transfer it to registration.html
+    else:
+        return render(request, 'registration.html')
+
+#Aunthentication of HR from DB
+>>>>>>> 59cc6022a0423adf8340d9c550ee3114505ed599
 def hr_login(request):
+    if request.method=='POST':
+        username=request.POST['username']
+        password=request.POST['password']
+        user=auth.authenticate(username=username,password=password)
+        if user is not None:
+            auth.login(request,user)
+            return render(request, 'hr_candidateinfo.html')
+        else:
+            messages.error(request, "Enter correct credentials..")
+            return render(request, 'hr_login.html')
+          
     return render(request, 'HR_login.html')
 
 
+<<<<<<< HEAD
+=======
+#Authentication of Interviewer from DB
+
+>>>>>>> 59cc6022a0423adf8340d9c550ee3114505ed599
 def interviewer(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            return render(request, 'interviewer_page.html')
+        else:
+            messages.error(request,"Enter correct credentials..")
+            return render(request, 'Interviewer_Login.html')
+
     return render(request, 'Interviewer_Login.html')
 
 
+<<<<<<< HEAD
 def register(request):
     # if request from registration.html is POST, get all details in variables
     if request.method == 'POST':
@@ -51,3 +124,38 @@ def register(request):
     # if the request from registration.html is GET, then transfer it to registration.html
     else:
         return render(request, 'registration.html')
+=======
+#After Login navigate to this  pages
+def hr_page(request):
+    return render(request,'hr_page.html')
+def interviewer_page(request):
+    return render(request,'interviewer_page.html')
+
+
+
+#Interviewer reg- Mayuri's Code added
+def interview_details(request):
+    return render(request, 'interview_details.html')
+
+#Page after HR submits candidate information
+def submit_candidateinfo(request):
+    return render(request, 'submit_candidateinfo.html')
+
+
+def hr(request):
+    if request.method=="POST":
+        name = request.POST.get('name', '')
+        skills = request.POST.get('skills', '')
+        experience = request.POST.get('experience', '')
+        day = request.POST.get('day', '')
+        time = request.POST.get('time', '')
+        ins = Candidate(name=name, skills=skills, experience=experience, day=day, time=time)
+        ins.save()
+        return render(request, 'submit_candidateinfo.html')
+    return render(request, 'hr_candidateinfo.html')
+
+def Logout(request):
+    def logout(request):
+        auth.logout(request)
+        return redirect('/')
+>>>>>>> 59cc6022a0423adf8340d9c550ee3114505ed599

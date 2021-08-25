@@ -3,8 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title>َ Welcome Form</title>
-
-
   </head>
 <style>
 {% load static %}
@@ -53,30 +51,28 @@ background-size:cover;
   width: 600px;
   padding: 50px;
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%,-50%);
-
+  background-color:rgb(0,0,0,0.8);
+  border-radius: 30px;
   text-align: center;
 }
 .box h1{
-  color: black;
+  color: white;
   margin: 10px 20px;
   font-weight: 500;
 }
-
-
-
 </style>
-  <body>
+   <body>
 
-<form class="box" action=" " method="post" >
- <h1>Welcome to Interview Scheduler</h1>
-<div class="btns">
- <a href="{% url 'hr_login' %}">Login As HR</a>
-<a href="{% url 'interviewer' %}">Login As Interviewer</a>
-</div>
-</form>
+      <form class="box" action=" " method="post" >
+          <a href="{% url 'welcome' %}"><h1>Home</h1></a>
+          <div class="btns">
+               <a href="{% url 'hr_login' %}">Login As HR</a>
+               <a href="{% url 'interviewer' %}">Login As Interviewer</a>
+          </div>
+       </form>
 
 
   </body>

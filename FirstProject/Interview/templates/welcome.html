@@ -11,7 +11,7 @@
 .btns a{
   position: relative;
   margin: 10px 30px;
-text-align:center;
+  text-align:center;
   height: 60px;
   width: 300px;
   display: block;
@@ -45,9 +45,9 @@ body{
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-background-image:url('{% static "images/image.jpeg" %}');
-background-repeat:no-repeat;
-background-size:cover;
+  background-image:url('{% static "images/image.jpeg" %}');
+  background-repeat:no-repeat;
+  background-size:cover;
 }
 .box{
   width: 360px;
@@ -55,10 +55,9 @@ background-size:cover;
   position: absolute;
   top: 40%;
   left: 45%;
-
-border-radius: 30px;
+  background-color:rgb(0,0,0,0.8);
+  border-radius: 30px;
   transform: translate(-50%,-50%);
-
   text-align: center;
 }
 .box h1{
@@ -69,11 +68,14 @@ border-radius: 30px;
 
 .marquee
 {
-font-size:30px;
+ font-size:30px;
+ font-family: "Times New Roman", Times, serif;
+ font-weight: 500;
 }
 
 </style>
   <body>
+<<<<<<< HEAD
 <div class="marquee">
 <marquee hspace="300px" width="50%" direction="left" height="400px">
 Welcome to Interview Scheduler
@@ -85,6 +87,19 @@ Welcome to Interview Scheduler
 <a href="{% url 'register' %}">Register</a>
 </div>
 </form>
+=======
+    <div class="marquee">
+      <marquee hspace="300px" width="50%" direction="left" height="400px">
+          Welcome to Interview Scheduler
+      </marquee>
+   </div>
+    <form class="box" action=" " method="post" >
+         <div class="btns">
+          <a href="{% url 'home' %}">Login </a>
+          <a href="{% url 'register' %}">Register</a>
+        </div>
+    </form>
+>>>>>>> 59cc6022a0423adf8340d9c550ee3114505ed599
 
 
   </body>
