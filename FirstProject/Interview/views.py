@@ -1,15 +1,11 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
-<<<<<<< HEAD
 from django.http import HttpResponse
-
-=======
-from django.http import  HttpResponse
 from django.contrib import admin
-from django.contrib.auth import  authenticate
+from django.contrib.auth import authenticate
 from .models import Candidate
->>>>>>> 59cc6022a0423adf8340d9c550ee3114505ed599
+
 
 # Create your views here.
 def home(request):
@@ -19,9 +15,7 @@ def home(request):
 def welcome(request):
     return render(request, 'welcome.html')
 
-<<<<<<< HEAD
 
-=======
 #Registration Code here
 def register(request):
     # if request from registration.html is POST, get all details in variables
@@ -57,7 +51,7 @@ def register(request):
         return render(request, 'registration.html')
 
 #Aunthentication of HR from DB
->>>>>>> 59cc6022a0423adf8340d9c550ee3114505ed599
+
 def hr_login(request):
     if request.method=='POST':
         username=request.POST['username']
@@ -73,11 +67,10 @@ def hr_login(request):
     return render(request, 'HR_login.html')
 
 
-<<<<<<< HEAD
-=======
+
 #Authentication of Interviewer from DB
 
->>>>>>> 59cc6022a0423adf8340d9c550ee3114505ed599
+
 def interviewer(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -93,7 +86,7 @@ def interviewer(request):
     return render(request, 'Interviewer_Login.html')
 
 
-<<<<<<< HEAD
+
 def register(request):
     # if request from registration.html is POST, get all details in variables
     if request.method == 'POST':
@@ -124,12 +117,7 @@ def register(request):
     # if the request from registration.html is GET, then transfer it to registration.html
     else:
         return render(request, 'registration.html')
-=======
-#After Login navigate to this  pages
-def hr_page(request):
-    return render(request,'hr_page.html')
-def interviewer_page(request):
-    return render(request,'interviewer_page.html')
+
 
 
 
@@ -155,7 +143,6 @@ def hr(request):
     return render(request, 'hr_candidateinfo.html')
 
 def Logout(request):
-    def logout(request):
         auth.logout(request)
         return redirect('/')
->>>>>>> 59cc6022a0423adf8340d9c550ee3114505ed599
+
