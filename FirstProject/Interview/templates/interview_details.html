@@ -5,13 +5,13 @@
     <title>Interviewer Details</title>
 
     <style type="text/css">
-        {% load static %}
+       {% load static %}
         body{
-                background-image:url('{% static "images/image.jpeg" %}');
-               /* background-position:center;*/
-                background-size:cover;
-            }
+            background-image: url('{% static "images/image.jpeg" %}');
+            background-size: cover;
+            background-attachment: fixed;
 
+        }
         table{
                 width:600px
                 margin:auto;
@@ -75,9 +75,9 @@
 </head>
 <body>
 
-    <form method="GET">
+    <form action="interview_details" method="POST">
 
-
+    {% csrf_token %}
         <h2><u>Interviewer Details Form</u></h2>
         <br>
         <table class="center">
@@ -86,6 +86,11 @@
                 <td> <input class="all" type="text" name="first_name" placeholder="First Name">
                     <input class="all" type="text" name="last_name" placeholder="Last Name">
                </td>
+            </tr>
+
+            <tr>
+                <td><b>EMP_ID :</b></td>
+                <td><input class="all" name="Emp_ID" placeholder="Enter Employee_ID"></td>
             </tr>
 
             <tr>
@@ -106,40 +111,26 @@
 
             <tr>
                 <td><b>EXPERIENCE :</b></td>
-                <td class="all">
-                    <select>
-                        <option value="0">Select Year</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">>10</option>
-                    </select>
-                </td>
+                <td><input class="all" name="experience" placeholder="Enter Year"></td>
             </tr>
 
             <tr>
 
-                <td><div class="multiple-select"><b>SKILLS :</b></div></td>
-		            <td><textarea cols="60" rows="5"></textarea></td>
+                <td><b>SKILLS :</b></td>
+		            <td><textarea cols="60" rows="5" name="skill"></textarea></td>
             </tr>
 
             <tr>
                 <td><b>TIME SLOT:</b></td>
                 <td class="all">
-                     <select>
+                     <select name="week">
                         <option value="0">Select Week</option>
                         <option value="1">Week 1</option>
                         <option value="2">Week 2</option>
                         <option value="3">Week 3</option>
                         <option value="4">Week 4</option>
                      </select>
-                     <select>
+                     <select name="day">
                          <option value="0">Select Day</option>
                          <option value="1">Sunday</option>
                          <option value="2">Monday</option>
