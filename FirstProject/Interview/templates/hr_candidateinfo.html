@@ -68,7 +68,11 @@ input[type=submit] {
 {% block body %}
 <div class="container my-3">
     <h3>Login as HR</h3>
+<<<<<<< HEAD
     <form action="/submit_candidateinfo/" method="post">{% csrf_token %}
+=======
+    <form action="hr" method="post">{% csrf_token %}
+>>>>>>> 247da9ca82931d96dba4455f5b77502d592b4b39
   <div class="form-group">
     <label for="name">Name</label>
     <input type="text" class="form-control" id="name" name='name' placeholder="Enter here">

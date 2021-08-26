@@ -5,6 +5,7 @@
     <title>Interviewer Details</title>
 
     <style type="text/css">
+<<<<<<< HEAD
         {% load static %}
         body{
                 background-image:url('{% static "images/image.jpeg" %}');
@@ -12,6 +13,15 @@
                 background-size:cover;
             }
 
+=======
+       {% load static %}
+        body{
+            background-image: url('{% static "images/image.jpeg" %}');
+            background-size: cover;
+            background-attachment: fixed;
+
+        }
+>>>>>>> 247da9ca82931d96dba4455f5b77502d592b4b39
         table{
                 width:600px
                 margin:auto;
@@ -75,9 +85,15 @@
 </head>
 <body>
 
+<<<<<<< HEAD
     <form method="GET">
 
 
+=======
+    <form action="interview_details" method="POST">
+
+    {% csrf_token %}
+>>>>>>> 247da9ca82931d96dba4455f5b77502d592b4b39
         <h2><u>Interviewer Details Form</u></h2>
         <br>
         <table class="center">
@@ -89,6 +105,14 @@
             </tr>
 
             <tr>
+<<<<<<< HEAD
+=======
+                <td><b>EMP_ID :</b></td>
+                <td><input class="all" name="Emp_ID" placeholder="Enter Employee_ID"></td>
+            </tr>
+
+            <tr>
+>>>>>>> 247da9ca82931d96dba4455f5b77502d592b4b39
                 <td><b>EMAIL ID :</b></td>
                 <td><input class="all" name="Email_ID" placeholder="Enter Email"></td>
             </tr>
@@ -106,6 +130,7 @@
 
             <tr>
                 <td><b>EXPERIENCE :</b></td>
+<<<<<<< HEAD
                 <td class="all">
                     <select>
                         <option value="0">Select Year</option>
@@ -121,25 +146,41 @@
                         <option value="10">>10</option>
                     </select>
                 </td>
+=======
+                <td><input class="all" name="experience" placeholder="Enter Year"></td>
+>>>>>>> 247da9ca82931d96dba4455f5b77502d592b4b39
             </tr>
 
             <tr>
 
+<<<<<<< HEAD
                 <td><div class="multiple-select"><b>SKILLS :</b></div></td>
 		            <td><textarea cols="60" rows="5"></textarea></td>
+=======
+                <td><b>SKILLS :</b></td>
+		            <td><textarea cols="60" rows="5" name="skill"></textarea></td>
+>>>>>>> 247da9ca82931d96dba4455f5b77502d592b4b39
             </tr>
 
             <tr>
                 <td><b>TIME SLOT:</b></td>
                 <td class="all">
+<<<<<<< HEAD
                      <select>
+=======
+                     <select name="week">
+>>>>>>> 247da9ca82931d96dba4455f5b77502d592b4b39
                         <option value="0">Select Week</option>
                         <option value="1">Week 1</option>
                         <option value="2">Week 2</option>
                         <option value="3">Week 3</option>
                         <option value="4">Week 4</option>
                      </select>
+<<<<<<< HEAD
                      <select>
+=======
+                     <select name="day">
+>>>>>>> 247da9ca82931d96dba4455f5b77502d592b4b39
                          <option value="0">Select Day</option>
                          <option value="1">Sunday</option>
                          <option value="2">Monday</option>
@@ -162,4 +203,8 @@
     </form>
 
 </body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> 247da9ca82931d96dba4455f5b77502d592b4b39
