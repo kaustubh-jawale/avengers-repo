@@ -5,9 +5,9 @@ class Candidate(models.Model):
     candidate_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
     skills= models.CharField(max_length=50)
-    experience = models.CharField(max_length=70)
+    experience = models.FloatField()
     day = models.CharField(max_length=70)
-    time = models.CharField(max_length=50)
+    time = models.FloatField()
 
     def __str__(self):
         return self.name
