@@ -67,7 +67,7 @@ input[type=submit] {
 
 {% block body %}
 <div class="container my-3">
-    <h3>Login as HR</h3>
+    <h3>Add Candidate</h3>
     <form action="hr" method="post">{% csrf_token %}
   <div class="form-group">
     <label for="name">Name</label>
@@ -78,7 +78,7 @@ input[type=submit] {
     <input type="text" class="form-control" id="skills" name='skills' placeholder="Enter here">
   </div>
 
-  <div class="form-group">
+  <div class="fo  rm-group">
     <label for="name">Experience</label>
     <input type="text" class="form-control" id="experience" name='experience' placeholder="Enter here">
   </div>

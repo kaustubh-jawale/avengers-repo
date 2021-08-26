@@ -1,19 +1,61 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.http import  HttpResponse
 from django.contrib import admin
 from django.contrib.auth import  authenticate
-from .models import Candidate,Employee
+from .models import Candidate,Employee,Interviewer,Human_Resources
 
 # Create your views here.
 def home(request):
     return render(request, 'Home.html')
+
 def welcome(request):
     return render(request, 'welcome.html')
 
+def register_both(request):
+    return render(request, 'register_both.html')
+#HR Register
+def hr_register(request):
+    if request.method == 'POST':
+        firstname = request.POST['firstname']
+        lastname = request.POST['lastname']
+        username = request.POST['username']
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
+        email = request.POST['email']
+        gender = request.POST['gender']
+        # check if password and confirm password both are same
+        if password == confirm_password:
+            # check whether same username is there any database
+            if Human_Resources.objects.filter(username=username).exists():
+                messages.info(request, 'Username is already taken')
+                return render(request, 'registration.html')
+            else:
+                # if not same username, register the user
+                user = Human_Resources(fname=firstname, lname=lastname,
+                                   username=username, email=email, password=password, password2=confirm_password,
+                                   gender=gender)
+
+                user.save()
+                return redirect('/')
+        else:
+            # printing message if password doesnt match
+            messages.info(request, 'Password not matched')
+            return render(request, 'registration.html')
+        return render(request, 'registration.html')
+
+        # if the request from registration.html is GET, then transfer it to registration.html
+    else:
+        return render(request, 'registration.html')
+
+
+
+
+
+
 #Registration Code here
-def register(request):
+def interviewer_register(request):
     # if request from registration.html is POST, get all details in variables
     if request.method == 'POST':
         firstname = request.POST['firstname']
@@ -22,44 +64,52 @@ def register(request):
         password = request.POST['password']
         confirm_password = request.POST['confirm_password']
         email = request.POST['email']
-
+        gender=request.POST['gender']
         # check if password and confirm password both are same
         if password == confirm_password:
             # check whether same username is there any database
-            if User.objects.filter(username=username).exists():
+            if Interviewer.objects.filter(username=username).exists():
                 messages.info(request, 'Username is already taken')
-                return redirect('register')
+                return redirect('interviewer_register')
             else:
                 # if not same username, register the user
-                user = User.objects.create_user(first_name=firstname, last_name=lastname, email=email,
-                                                username=username, password=password)
+                user = Interviewer(fname=firstname, lname=lastname,
+                                                username=username, email=email, password=password,password2=confirm_password,gender=gender)
 
                 user.save()
                 return redirect('/')
         else:
             # printing message if password doesnt match
             messages.info(request, 'Password not matched')
-            return redirect('register')
-        return redirect('register')
+            return redirect('interviewer_register')
+        return redirect('interviewer_register')
 
     # if the request from registration.html is GET, then transfer it to registration.html
     else:
-        return render(request, 'registration.html')
+        return render(request, 'interviewer_register.html')
+
+
+
+
 
 #Aunthentication of HR from DB
 def hr_login(request):
     if request.method=='POST':
         username=request.POST['username']
         password=request.POST['password']
-        user=auth.authenticate(username=username,password=password)
-        if user is not None:
-            auth.login(request,user)
-            return render(request, 'hr_candidateinfo.html')
+        if Human_Resources.objects.all().filter(username=username,password=password).exists():
+            context = {'username': username}
+            return render(request, 'hr_candidateinfo.html',context)
         else:
             messages.error(request, "Enter correct credentials..")
             return render(request, 'hr_login.html')
           
     return render(request, 'HR_login.html')
+
+
+
+
+
 
 
 #Authentication of Interviewer from DB
@@ -68,9 +118,7 @@ def interviewer(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        user = auth.authenticate(username=username, password=password)
-        if user is not None:
-            auth.login(request, user)
+        if Interviewer.objects.all().filter(username=username,password=password).exists():
             return render(request, 'interview_details.html')
         else:
             messages.error(request,"Enter correct credentials..")
@@ -106,9 +154,20 @@ def interview_details(request):
             return render(request, 'interviewer_page.html')
 
 
+
+
+
 #Page after HR submits candidate information
 def submit_candidateinfo(request):
+    if request.method == "POST":
+        name = request.POST.get('name', '')
+        skills = request.POST.get('skills', '')
+
     return render(request, 'submit_candidateinfo.html')
+
+
+
+
 
 
 def hr(request):
@@ -120,9 +179,12 @@ def hr(request):
         time = request.POST.get('time', '')
         ins = Candidate(name=name, skills=skills, experience=experience, day=day, time=time)
         ins.save()
-        context={'time':time}
-        return render(request, 'submit_candidateinfo.html',)
+        employee = Employee.objects.all().filter(emp_Skill=skills)
+        context = {'emp': employee}
+        return render(request, 'submit_candidateinfo.html',context)
     return render(request, 'hr_candidateinfo.html')
+
+
 
 def Logout(request):
     def logout(request):
