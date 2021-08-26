@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.http import  HttpResponse
+from django.db.models.fields import FloatField
 from django.contrib import admin
 from django.contrib.auth import  authenticate
 from .models import Candidate,Employee
@@ -87,21 +88,19 @@ def interviewer(request):
 #Interviewer reg- Mayuri's Code added
 def interview_details(request):
         if request.method == "POST":
-            emp_first_name = request.POST.get('first_name', '')
-            emp_last_name = request.POST.get('last_name', '')
-            emp_ID = request.POST.get('Emp_ID', '')
-            emp_Email = request.POST.get('Email_ID', '')
-            emp_Phone = request.POST.get('phone', '')
-            emp_Gender = request.POST.get('gender', '')
-            emp_Experience = request.POST.get('experience', '')
-            emp_Skill = request.POST.get('skill', '')
-            time_Week = request.POST.get('week', '')
-            time_Day = request.POST.get('day', '')
-            time_Slot = request.POST.get('time', '')
-            ins = Employee(emp_first_name=emp_first_name, emp_last_name=emp_last_name, emp_ID=emp_ID,
-                           emp_Email=emp_Email, emp_Phone=emp_Phone, emp_Gender=emp_Gender,
-                           emp_Experience=emp_Experience, emp_Skill=emp_Skill, time_Week=time_Week, time_Day=time_Day,
-                           time_Slot=time_Slot)
+            emp_first_name = request.POST['first_name']
+            emp_last_name = request.POST['last_name']
+            emp_Email = request.POST['Email_ID']
+            emp_Skill = request.POST['skill']
+            emp_from_exp = request.POST['from_experience']
+            emp_to_exp = request.POST['to_experience']
+            emp_date = request.POST['date']
+            emp_start_time = request.POST['start_time']
+            emp_end_time = request.POST['end_time']
+            ins = Employee(emp_first_name=emp_first_name, emp_last_name=emp_last_name, emp_Email=emp_Email,
+                         emp_Skill=emp_Skill, emp_from_exp=emp_from_exp, emp_to_exp= emp_to_exp, emp_date=emp_date,
+                           emp_start_time=emp_start_time, emp_end_time=emp_end_time )
+
             ins.save()
             return render(request, 'interviewer_page.html')
 
