@@ -3,8 +3,14 @@ from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.http import  HttpResponse
 from django.contrib import admin
-from django.contrib.auth import  authenticate
-from .models import Candidate,Employee,Interviewer,Human_Resources
+from django.contrib.auth.hashers import make_password,check_password
+
+import Interview.models
+from .models import Candidate,Interviewer,Human_Resources,slot
+from cryptography.fernet import Fernet
+
+
+
 
 # Create your views here.
 def home(request):
@@ -33,10 +39,11 @@ def hr_register(request):
                 return render(request, 'registration.html')
             else:
                 # if not same username, register the user
+
                 user = Human_Resources(fname=firstname, lname=lastname,
                                    username=username, email=email, password=password, password2=confirm_password,
                                    gender=gender)
-
+                user.password=make_password(user.password)
                 user.save()
                 return redirect('/')
         else:
@@ -75,7 +82,7 @@ def interviewer_register(request):
                 # if not same username, register the user
                 user = Interviewer(fname=firstname, lname=lastname,
                                                 username=username, email=email, password=password,password2=confirm_password,gender=gender)
-
+                user.password = make_password(user.password)
                 user.save()
                 return redirect('/')
         else:
@@ -97,61 +104,53 @@ def hr_login(request):
     if request.method=='POST':
         username=request.POST['username']
         password=request.POST['password']
-        if Human_Resources.objects.all().filter(username=username,password=password).exists():
-            context = {'username': username}
-            return render(request, 'hr_candidateinfo.html',context)
+        if Human_Resources.objects.all().filter(username=username).exists():
+           user = Human_Resources.objects.get(username=username)
+           if user:
+               flag = check_password(password,user.password)
+               if flag:
+                     context = {'username': username}
+                     return render(request, 'hr_candidateinfo.html', context)
+               else:
+                 messages.error(request, "Enter correct credentials..")
+                 return render(request, 'hr_login.html')
+
         else:
             messages.error(request, "Enter correct credentials..")
             return render(request, 'hr_login.html')
-          
+
+
     return render(request, 'HR_login.html')
-
-
-
-
-
 
 
 #Authentication of Interviewer from DB
 
 def interviewer(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        if Interviewer.objects.all().filter(username=username,password=password).exists():
-            return render(request, 'interview_details.html')
+  if request.method == 'POST':
+      username = request.POST['username']
+      password = request.POST['password']
+      if Interviewer.objects.all().filter(username=username).exists():
+        user1 = Interviewer.objects.get(username=username)
+        if user1 :
+            flag = check_password(password, user1.password)
+            if flag:
+                context={'user1':user1}
+                return render(request, 'slot.html',context)
+            else:
+                messages.error(request, "Enter correct credentials..")
+                return render(request, 'Interviewer_Login.html')
+
         else:
             messages.error(request,"Enter correct credentials..")
             return render(request, 'Interviewer_Login.html')
 
-    return render(request, 'Interviewer_Login.html')
+  return render(request, 'Interviewer_Login.html')
 
 
 #After Login navigate to this  pages
 
 
 
-
-#Interviewer reg- Mayuri's Code added
-def interview_details(request):
-        if request.method == "POST":
-            emp_first_name = request.POST.get('first_name', '')
-            emp_last_name = request.POST.get('last_name', '')
-            emp_ID = request.POST.get('Emp_ID', '')
-            emp_Email = request.POST.get('Email_ID', '')
-            emp_Phone = request.POST.get('phone', '')
-            emp_Gender = request.POST.get('gender', '')
-            emp_Experience = request.POST.get('experience', '')
-            emp_Skill = request.POST.get('skill', '')
-            time_Week = request.POST.get('week', '')
-            time_Day = request.POST.get('day', '')
-            time_Slot = request.POST.get('time', '')
-            ins = Employee(emp_first_name=emp_first_name, emp_last_name=emp_last_name, emp_ID=emp_ID,
-                           emp_Email=emp_Email, emp_Phone=emp_Phone, emp_Gender=emp_Gender,
-                           emp_Experience=emp_Experience, emp_Skill=emp_Skill, time_Week=time_Week, time_Day=time_Day,
-                           time_Slot=time_Slot)
-            ins.save()
-            return render(request, 'interviewer_page.html')
 
 
 
@@ -179,7 +178,7 @@ def hr(request):
         time = request.POST.get('time', '')
         ins = Candidate(name=name, skills=skills, experience=experience, day=day, time=time)
         ins.save()
-        employee = Employee.objects.all().filter(emp_Skill=skills)
+        employee =slot.objects.all().filter(emp_Skill=skills)
         context = {'emp': employee}
         return render(request, 'submit_candidateinfo.html',context)
     return render(request, 'hr_candidateinfo.html')
@@ -190,3 +189,18 @@ def Logout(request):
     def logout(request):
         auth.logout(request)
         return redirect('/')
+
+def slot(request):
+    if request.method=='POST':
+        name=request.POST['name']
+        skills=request.POST['skills']
+        date= request.POST['date1']
+        day= request.POST['day']
+        from1=request.POST['from']
+        to=request.POST['to']
+        slot=Interview.models.slot(name=name,skills=skills,date=date,day=day,from1=from1,to=to)
+        slot.save()
+        user1=Interviewer.objects.all().filter(fname=name)
+        context = {'username': user1}
+        messages.info(request,"Slot Saved")
+    return render(request, 'slot.html',context)

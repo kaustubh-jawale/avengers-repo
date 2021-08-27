@@ -20,9 +20,11 @@ urlpatterns = [
 
 
     #After Login
-    path('interview_details', views.interview_details, name="interview_details"),
+    path('slot', views.slot, name="slot"),
+
     path('hr', views.hr, name="hr"),
     path('submit_candidateinfo/', views.submit_candidateinfo, name="submit"),
+
 
     #Logout
     path('', views.Logout, name="Logout"),
