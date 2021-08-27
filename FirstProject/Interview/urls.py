@@ -8,14 +8,26 @@ urlpatterns = [
 
     path('', views.welcome,name="welcome"),
     path('home/',views.home,name="home"),
-    path('register',views.register,name="register"),
-    path('interviewer', views.interviewer,name="interviewer"),#Interviewer Login
+    path('register_both/', views.register_both, name="register_both"),
+
+    #Registration for both
+    path('hr_register', views.hr_register, name="hr_register"),
+    path('interviewer_register',views.interviewer_register,name="interviewer_register"),
+
+    #Login For for both
+    path('interviewer', views.interviewer,name="interviewer"),
     path('hr_login', views.hr_login,name="hr_login"),
-   path('interview_details', views.interview_details, name="interview_details"),
-    path('hr', views.hr, name="hr"), #saumya's code
+
+
+    #After Login
+    path('interview_details', views.interview_details, name="interview_details"),
+    path('hr', views.hr, name="hr"),
     path('submit_candidateinfo/', views.submit_candidateinfo, name="submit"),
-    path('', views.Logout, name="Logout")
-    
+
+    #Logout
+    path('', views.Logout, name="Logout"),
+
+
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
