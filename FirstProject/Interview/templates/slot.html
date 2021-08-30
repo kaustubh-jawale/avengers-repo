@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Slot</title>
     <style type="text/css">
        {% load static %}
         body{
@@ -10,6 +10,9 @@
             background-size: cover;
             background-attachment: fixed;
 
+        }
+        #colour{
+          color: #FF0000;
         }
         table{
                 width:200px
@@ -74,13 +77,19 @@
 
 		  cursor:pointer;
 		}
+
+		#right{
+
+            margin-top: 30px;
+
+      }
 .p{
 text-color:white;
 }
     </style>
 </head>
 <body>
-<body>
+
 
     <form action="time" method="POST">
         {% csrf_token %}
@@ -136,9 +145,18 @@ text-color:white;
 
 
         </div>
+        <div  id="right">
+            {% if user.is_authenticated %}
+            {{user.first_name}}
+            <b>
+              <a id="colour" href = "{% url 'Logout' %}"> Logout</a>
+            </b>
+            {% endif %}
+        </div>
     </form>
 
-</body>
 
 </body>
+
+
 </html>

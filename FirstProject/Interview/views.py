@@ -179,7 +179,7 @@ def hr(request):
         ins = Candidate(name=name, skills=skills, experience=experience, day=day, time=time)
         ins.save()
         employee = slot.objects.all().filter(skills=ins.skills)
-        print(employee)
+
         list_interviewers = []
         for emp in employee:
             if ins.day == emp.date:
@@ -190,6 +190,7 @@ def hr(request):
         else:
             i = random.randint(0, len(list_interviewers)-1)
             selected_interviewers = slot.objects.filter(name=list_interviewers[i], date=ins.day)
+            interviewer_select = selected_interviewers[0]
             for selected_interviewer in selected_interviewers:
                 if selected_interviewer.from1 == float(ins.time) and selected_interviewer.to == float(ins.time) + 1:
                     rec = slot.objects.filter(name=list_interviewers[i], from1=ins.time, date=ins.day)
@@ -202,12 +203,13 @@ def hr(request):
                     selected_interviewer.to = float(ins.time)
                     selected_interviewer.save()
                 if selected_interviewer.from1 < float(ins.time) and selected_interviewer.to > float(ins.time) + 1:
+                    new = slot(name=list_interviewers[i], skills=ins.skills, date=ins.day, day=selected_interviewer.day,
+                               from1=float(ins.time) + 1, to=selected_interviewer.to)
+                    new.save()
                     selected_interviewer.to = float(ins.time)
                     selected_interviewer.save()
-                    new = slot(name=list_interviewers[i], skills=ins.skills, date=ins.day, day=selected_interviewer.day,
-                               from1=ins.time + 1, to=selected_interviewer.to)
-                    new.save()
-            context = {'emp': selected_interviewers[0]}
+
+            context = {'emp': interviewer_select, 'time': str(float(ins.time))+'-'+str(float(ins.time)+1)}
         return render(request, 'submit_candidateinfo.html',context)
     return render(request, 'hr_candidateinfo.html')
 
