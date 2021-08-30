@@ -10,7 +10,7 @@ class Interviewer(models.Model):
     password2=models.CharField(max_length=50)
     gender=models.CharField(max_length=10)
     def __str__(self):
-        return self.fname+" "+self.lname
+        return self.fname
 
 
 class Human_Resources(models.Model):

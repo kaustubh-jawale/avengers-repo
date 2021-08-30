@@ -170,7 +170,7 @@ def submit_candidateinfo(request):
                 name = candidate.name + str(candidate.time)
                 send_mail('Interview Scheduled for the Candidate',
                           name,
-                          'aratidlengare@gmail.com',
+                          'schedule.interview2021@gmail.com',
                           [email],
                           fail_silently=False
                           )
@@ -219,8 +219,11 @@ def hr(request):
                     new.save()
                     selected_interviewer.to = float(ins.time)
                     selected_interviewer.save()
+            candidate = Candidate.objects.all().filter(name=name)
+            context = {'emp': selected_interviewers[0],
+                       'candidate': candidate}
 
-            context = {'emp': interviewer_select, 'time': str(float(ins.time))+'-'+str(float(ins.time)+1)}
+            #context = {'emp': interviewer_select, 'time': str(float(ins.time))+'-'+str(float(ins.time)+1)}
         return render(request, 'submit_candidateinfo.html',context)
     return render(request, 'hr_candidateinfo.html')
 
