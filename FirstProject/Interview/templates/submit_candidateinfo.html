@@ -48,27 +48,26 @@ tr:nth-child(even) {
 
   </head>
   <body>
-  <form action="hr_page" method="get">
+  <form action="submit_candidateinfo" method="POST">
 
   {% csrf_token %}
   <div class="container">
     <div class="row">
   <div class="col-lg-3"></div>
   <div class="col-lg-6" id="margin">
+
     <h1>Assign the Interviewer</h1>
+      {%  for candidate in candidate %}
+         <input type=text name='canname' value='{{candidate.name}}' readonly="readonly"/>
+      {% endfor %}
     <table>
-           <tr>
-              <th> Sr.NO  </th>
-              <th> Name Of Interviewer</th></tr>
-                  {% for  emp in  emp %}
-           <tr>
-                  <td >{{forloop.counter}}
-                  </td>
-             <td>
-               <a href="">{{emp.emp_first_name}} {{emp.emp_last_name}}</a>
-             </td>
+            <tr>
+               <td>
+                     <input type=text name='empname' value='{{emp}}' readonly="readonly"/>
+
+               </td>
+            <td>    <button type="submit" class="btn btn-success">Send Mail</button></td>
          </tr>
-    {% endfor %}
 
     </table>
 

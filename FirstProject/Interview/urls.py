@@ -18,12 +18,12 @@ urlpatterns = [
     path('interviewer', views.interviewer,name="interviewer"),
     path('hr_login', views.hr_login,name="hr_login"),
 
-
+    path('<int:id>',views.detail,name="detail"),
     #After Login
-    path('slot', views.slot, name="slot"),
+    path('slot', views.slots, name="slot"),
 
     path('hr', views.hr, name="hr"),
-    path('submit_candidateinfo/', views.submit_candidateinfo, name="submit"),
+    path('submit_candidateinfo', views.submit_candidateinfo, name="submit_candidateinfo"),
 
 
     #Logout
