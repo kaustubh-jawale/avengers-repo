@@ -142,14 +142,11 @@ text-color:white;
         <div style="text-align:center">
             <input  class="button1" type="submit" name="submit">
             <input  class="button2" type="reset" name="reset">
- <div class="col-lg-3" >
-    {% if user.is_authenticated %}
-	{{user.first_name}}
-	<b>
-      <a id="colour" href = "{% url 'Logout' %}"> Logout</a>
-    </b>
-  {% endif %}
-  </div>
+            <div class="col-lg-3">
+                <b>
+                  <a id="colour" href = "{% url 'Logout' %}"> Logout</a>
+                </b>
+            </div>
 
         </div>
 

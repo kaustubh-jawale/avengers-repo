@@ -66,6 +66,10 @@ tr:nth-child(even) {
                      <input type=text name='empname' value='{{emp}}' readonly="readonly"/>
 
                </td>
+                <td>
+                     <input type=text  value='{{time}}' readonly="readonly"/>
+
+               </td>
             <td>    <button type="submit" class="btn btn-success">Send Mail</button></td>
          </tr>
 
@@ -75,12 +79,9 @@ tr:nth-child(even) {
   </div>
 
   <div class="col-lg-3" id="right">
-       {% if user.is_authenticated %}
-	      {{user.first_name}}
-	      <b>
+       <b>
                  <a id="colour" href = "{% url 'Logout' %}"> Logout</a>
           </b>
-      {% endif %}
   </div>
      </div>
 

@@ -1,15 +1,13 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.models import User, auth
-from django.http import  HttpResponse
+from django.http import HttpResponse
 from django.contrib import admin
 from django.contrib.auth.hashers import make_password,check_password
 import random
 import Interview.models
 from .models import Candidate,Interviewer,Human_Resources,slot
-from django.core.mail import  send_mail
-
-
+from django.core.mail import send_mail
 
 
 # Create your views here.
@@ -219,11 +217,10 @@ def hr(request):
                     new.save()
                     selected_interviewer.to = float(ins.time)
                     selected_interviewer.save()
-            candidate = Candidate.objects.all().filter(name=name)
-            context = {'emp': selected_interviewers[0],
-                       'candidate': candidate}
 
-            #context = {'emp': interviewer_select, 'time': str(float(ins.time))+'-'+str(float(ins.time)+1)}
+            #context = {'emp': selected_interviewers[0], 'candidate': candidate}
+            candidate = Candidate.objects.all().filter(name=name)
+            context = {'emp': interviewer_select, 'time': str(float(ins.time))+'-'+str(float(ins.time)+1), 'candidate': candidate}
         return render(request, 'submit_candidateinfo.html',context)
     return render(request, 'hr_candidateinfo.html')
 
