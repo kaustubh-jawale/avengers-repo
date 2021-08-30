@@ -7,7 +7,7 @@ from django.contrib.auth.hashers import make_password,check_password
 import random
 import Interview.models
 from .models import Candidate,Interviewer,Human_Resources,slot
-
+from django.core.mail import  send_mail
 
 
 
@@ -66,7 +66,7 @@ def interviewer_register(request):
     # if request from registration.html is POST, get all details in variables
     if request.method == 'POST':
         firstname = request.POST['firstname']
-        lastname = request.POST['lastname']
+        #lastname = request.POST['lastname']
         username = request.POST['username']
         password = request.POST['password']
         confirm_password = request.POST['confirm_password']
@@ -80,7 +80,7 @@ def interviewer_register(request):
                 return redirect('interviewer_register')
             else:
                 # if not same username, register the user
-                user = Interviewer(fname=firstname, lname=lastname,
+                user = Interviewer(fname=firstname,
                                                 username=username, email=email, password=password,password2=confirm_password,gender=gender)
                 user.password = make_password(user.password)
                 user.save()
@@ -159,14 +159,24 @@ def interviewer(request):
 #Page after HR submits candidate information
 def submit_candidateinfo(request):
     if request.method == "POST":
-        name = request.POST.get('name', '')
-        skills = request.POST.get('skills', '')
-
+        ename = request.POST['empname']
+        print(ename)
+        can_name = request.POST['canname']
+        user = Interviewer.objects.all().filter(fname=ename)
+        candidate = Candidate.objects.all().filter(name=can_name)
+        for user in user:
+            email = user.email
+            for candidate in candidate:
+                name = candidate.name + str(candidate.time)
+                send_mail('Interview Scheduled for the Candidate',
+                          name,
+                          'aratidlengare@gmail.com',
+                          [email],
+                          fail_silently=False
+                          )
+                Candidate.objects.all().filter(name=can_name).delete()
+            # slot.objects.all().filter(name=ename,from1=candidate.time).delete()
     return render(request, 'submit_candidateinfo.html')
-
-
-
-
 
 
 def hr(request):
@@ -187,6 +197,7 @@ def hr(request):
                     list_interviewers.append(emp.name)
         if len(list_interviewers) == 0:
             context = {'emp': 'No Interviewers are available for this slot. Try another slot.'}
+            Candidate.objects.all().filter(name=name).delete()
         else:
             i = random.randint(0, len(list_interviewers)-1)
             selected_interviewers = slot.objects.filter(name=list_interviewers[i], date=ins.day)

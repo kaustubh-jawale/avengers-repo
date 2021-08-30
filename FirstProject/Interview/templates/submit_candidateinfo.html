@@ -55,23 +55,22 @@ tr:nth-child(even) {
     <div class="row">
   <div class="col-lg-3"></div>
   <div class="col-lg-6" id="margin">
-    <h1>Assign the Interviewer</h1>
-    <table>
-           <tr>
-              <th> Name Of Interviewer </th>
-              <th> Time </th></tr>
 
-           <tr>
-                  <td >
-                       {{emp}}
-                  </td>
-             <td>
-               {{time}}
-             </td>
+    <h1>Assign the Interviewer</h1>
+      {%  for candidate in candidate %}
+         <input type=text name='canname' value='{{candidate.name}}' readonly="readonly"/>
+      {% endfor %}
+    <table>
+            <tr>
+               <td>
+                     <input type=text name='empname' value='{{emp}}' readonly="readonly"/>
+
+               </td>
+            <td>    <button type="submit" class="btn btn-success">Send Mail</button></td>
          </tr>
 
-
     </table>
+
 
   </div>
 

@@ -23,7 +23,7 @@ urlpatterns = [
     path('time', views.time, name="time"),
 
     path('hr', views.hr, name="hr"),
-    path('submit_candidateinfo/', views.submit_candidateinfo, name="submit"),
+    path('submit_candidateinfo', views.submit_candidateinfo, name="submit_candidateinfo"),
 
 
     #Logout
