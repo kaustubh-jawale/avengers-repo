@@ -18,7 +18,7 @@ def welcome(request):
     return render(request, 'welcome.html')
 
 def register_both(request):
-    return render(request, 'register_both.html')
+    return render(request, 'Register_both.html')
 #HR Register
 def hr_register(request):
     if request.method == 'POST':
