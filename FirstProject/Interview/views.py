@@ -162,10 +162,12 @@ def submit_candidateinfo(request):
         can_name = request.POST['canname']
         user = Interviewer.objects.all().filter(fname=ename)
         candidate = Candidate.objects.all().filter(name=can_name)
+        print(candidate)
+        print(type(candidate))
         for user in user:
             email = user.email
-            for candidate in candidate:
-                name = candidate.name + str(candidate.time)
+            for c in list(candidate):
+                name = c.name + str(c.time)
                 send_mail('Interview Scheduled for the Candidate',
                           name,
                           'schedule.interview2021@gmail.com',

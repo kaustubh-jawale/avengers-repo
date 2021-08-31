@@ -57,8 +57,8 @@ tr:nth-child(even) {
   <div class="col-lg-6" id="margin">
 
     <h1>Assign the Interviewer</h1>
-      {%  for candidate in candidate %}
-         <input type=text name='canname' value='{{candidate.name}}' readonly="readonly"/>
+      {% for c in candidate %}
+         <input type=text name='canname' value='{{c.name}}' readonly="readonly"/>
       {% endfor %}
     <table>
             <tr>
